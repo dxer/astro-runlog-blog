@@ -6,6 +6,7 @@ import MediaWindow from '../../components/MediaWindow.astro';
 import Cover from '../../components/Cover.astro';
 import { site } from '../../data/site';
 import { getCategoryMeta } from '../../data/categories';
+import { basePath } from '../../config';
 import { t, formatDate } from '../../i18n';
 
 export async function getStaticPaths() {
@@ -37,7 +38,7 @@ const ld = {
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
   <Section top={false} inner="px-6 pt-[72px] pb-10 max-md:px-5 max-md:pt-8 max-md:pb-6" label="Post header">
     <p class="flex items-center gap-2 text-[12px] text-smoke">
-      <a href="/posts" class="hover:text-ink">Posts</a> / 
+      <a href={`${basePath}/posts`} class="hover:text-ink">Posts</a> / 
       <span class="pill bg-ink text-canvas tracking-[0.06em] !text-[11px]">{categoryMeta.label}</span>
     </p>
     <h1 class="mt-6 text-[clamp(32px,4.6vw,56px)] leading-[1.08] font-bold tracking-[-0.045em] max-w-[28ch]">{post.data.title}</h1>
@@ -48,7 +49,7 @@ const ld = {
       <span class="ml-auto flex flex-wrap gap-2 max-md:ml-0">
         <button type="button" class="border border-rule px-2.5 py-1.5 text-[12px] text-steel hover:text-ink cursor-pointer" data-copy-link={url} data-copied-text={t.copied}>{t.copyLink}</button>
         <button type="button" class="border border-rule px-2.5 py-1.5 text-[12px] text-steel hover:text-ink cursor-pointer" data-copy-quote={`[${post.data.title}](${url})`} data-copied-text={t.copied}>{t.copyQuote}</button>
-        <a class="border border-rule px-2.5 py-1.5 text-[12px] text-steel hover:text-ink" href="/rss.xml" target="_blank" rel="noopener" title={t.rssFeed}>RSS</a>
+        <a class="border border-rule px-2.5 py-1.5 text-[12px] text-steel hover:text-ink" href={`${basePath}/rss.xml`} target="_blank" rel="noopener" title={t.rssFeed}>RSS</a>
         <a class="border border-rule px-2.5 py-1.5 text-[12px] text-steel hover:text-ink" href={`https://x.com/intent/post?url=${encodeURIComponent(url)}`} target="_blank" rel="noopener">X</a>
         <a class="border border-rule px-2.5 py-1.5 text-[12px] text-steel hover:text-ink" href={`https://service.weibo.com/share/share.php?title=${encodeURIComponent(post.data.title)}&url=${encodeURIComponent(url)}`} target="_blank" rel="noopener">微博</a>
       </span>
@@ -105,7 +106,7 @@ const ld = {
         <ul class="mt-4 border-t border-rule">
           {related.map((p) => (
             <li>
-              <a href={`/posts/${p.id}`} class="group grid grid-cols-[130px_1fr_auto_auto] max-md:grid-cols-[1fr_auto] gap-6 items-center py-[18px] border-b border-rule">
+              <a href={`${basePath}/posts/${p.id}`} class="group grid grid-cols-[130px_1fr_auto_auto] max-md:grid-cols-[1fr_auto] gap-6 items-center py-[18px] border-b border-rule">
                 <span class="text-[13px] text-smoke max-md:hidden">{formatDate(p.data.date)}</span>
                 <span class="text-[15px] font-bold text-ink group-hover:underline underline-offset-4">{p.data.title}</span>
                 <span class="text-[12px] text-smoke max-md:hidden">{p.data.readingTime} {t.minShort}</span>

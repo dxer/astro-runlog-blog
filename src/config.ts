@@ -120,6 +120,7 @@ export const config = ConfigSchema.parse(rawConfig);
 
 const isEn = config.site.locale === 'en';
 export const basePath = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+export const withBase = (p: string) => (!p || p.startsWith('http') || p.startsWith('#') || p.startsWith('mailto:') ? p : `${basePath}${p.startsWith('/') ? p : `/${p}`}`);
 
 // 动态计算导航栏与页脚，与 categories、sections、locale 和 basePath 自动保持同步
 const dynamicNav = [
@@ -173,13 +174,35 @@ export const site = {
 
 export const {
   sections,
-  hero,
   terminal,
   categories,
   framework,
   principlesSection,
-  ctaSection,
 } = config;
+
+export const hero = {
+  ...config.hero,
+  primaryButton: {
+    ...config.hero.primaryButton,
+    href: withBase(config.hero.primaryButton.href),
+  },
+  secondaryButton: {
+    ...config.hero.secondaryButton,
+    href: withBase(config.hero.secondaryButton.href),
+  },
+};
+
+export const ctaSection = {
+  ...config.ctaSection,
+  primaryButton: {
+    ...config.ctaSection.primaryButton,
+    href: withBase(config.ctaSection.primaryButton.href),
+  },
+  secondaryButton: {
+    ...config.ctaSection.secondaryButton,
+    href: withBase(config.ctaSection.secondaryButton.href),
+  },
+};
 
 export interface CategoryMeta {
   slug: string;
