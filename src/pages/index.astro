@@ -15,6 +15,7 @@ import {
   principlesSection,
   ctaSection,
   getCategoryMeta,
+  basePath,
 } from '../config';
 import { t, formatDate } from '../i18n';
 
@@ -64,7 +65,7 @@ const recentPosts = allPosts.slice(0, 4);
               <p class="text-[13px] text-steel leading-relaxed">{item.description}</p>
             </div>
             <div class="mt-4 pt-3 border-t border-rule/50">
-              <a href={`/posts`} class="text-[12px] text-link hover:underline">{t.exploreCategory}</a>
+              <a href={`${basePath}/posts`} class="text-[12px] text-link hover:underline">{t.exploreCategory}</a>
             </div>
           </li>
         ))}
@@ -111,12 +112,12 @@ const recentPosts = allPosts.slice(0, 4);
           <p class="label"><b>[03]</b> recent entries · 最新记录</p>
           <h2 class="mt-3 text-[32px] max-md:text-[24px] font-bold tracking-tight">{t.recentArticles}</h2>
         </div>
-        <a href="/posts" class="link text-[14px]">{t.allArchive(allPosts.length)}</a>
+        <a href={`${basePath}/posts`} class="link text-[14px]">{t.allArchive(allPosts.length)}</a>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         {recentPosts.map((post) => (
-          <a href={`/posts/${post.id}`} class="group border border-rule p-6 bg-canvas hover:border-ink transition-colors flex flex-col justify-between">
+          <a href={`${basePath}/posts/${post.id}`} class="group border border-rule p-6 bg-canvas hover:border-ink transition-colors flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between text-[12px] text-smoke mb-3">
                 <span class="pill bg-ink text-canvas tracking-[0.06em] !text-[10px]">{getCategoryMeta(post.data.category).label}</span>

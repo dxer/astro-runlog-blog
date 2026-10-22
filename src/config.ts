@@ -119,38 +119,39 @@ const ConfigSchema = z.object({
 export const config = ConfigSchema.parse(rawConfig);
 
 const isEn = config.site.locale === 'en';
+export const basePath = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
 
-// 动态计算导航栏与页脚，与 categories、sections 和 locale 自动保持同步
+// 动态计算导航栏与页脚，与 categories、sections、locale 和 basePath 自动保持同步
 const dynamicNav = [
-  ...(config.sections.pillars ? [{ label: isEn ? 'Pillars' : '思考支柱', href: '/#pillars' }] : []),
-  { label: isEn ? 'All Posts' : '所有文章', href: '/posts' },
-  ...(config.sections.principles ? [{ label: isEn ? 'Principles' : '核心准则', href: '/#principles' }] : []),
-  ...(config.sections.framework ? [{ label: isEn ? 'Framework' : '决策框架', href: '/#framework' }] : []),
+  ...(config.sections.pillars ? [{ label: isEn ? 'Pillars' : '思考支柱', href: `${basePath}/#pillars` }] : []),
+  { label: isEn ? 'All Posts' : '所有文章', href: `${basePath}/posts` },
+  ...(config.sections.principles ? [{ label: isEn ? 'Principles' : '核心准则', href: `${basePath}/#principles` }] : []),
+  ...(config.sections.framework ? [{ label: isEn ? 'Framework' : '决策框架', href: `${basePath}/#framework` }] : []),
 ];
 
 const dynamicFooter = [
   {
     title: isEn ? 'Navigation' : '导航',
     links: [
-      [isEn ? 'Home' : '首页', '/'],
-      [isEn ? 'Archive' : '文章归档', '/posts'],
-      ['LLMs.txt', '/llms.txt'],
+      [isEn ? 'Home' : '首页', `${basePath}/`],
+      [isEn ? 'Archive' : '文章归档', `${basePath}/posts`],
+      ['LLMs.txt', `${basePath}/llms.txt`],
     ] as [string, string][],
   },
   {
     title: isEn ? 'Topics' : '专题',
-    links: config.categories.map((c) => [isEn && c.en ? c.en : c.label, `/posts`]) as [string, string][],
+    links: config.categories.map((c) => [isEn && c.en ? c.en : c.label, `${basePath}/posts`]) as [string, string][],
   },
   ...(config.sections.principles && config.principlesSection.items.length > 0 ? [{
     title: isEn ? 'Principles' : '准则',
-    links: config.principlesSection.items.slice(0, 3).map((p) => [isEn && p.rule ? p.rule : p.name, '/#principles']) as [string, string][],
+    links: config.principlesSection.items.slice(0, 3).map((p) => [isEn && p.rule ? p.rule : p.name, `${basePath}/#principles`]) as [string, string][],
   }] : []),
   {
     title: isEn ? 'Subscribe' : '订阅',
     links: [
-      [isEn ? 'RSS Feed' : 'RSS 订阅源', '/rss.xml'],
-      [isEn ? 'Sitemap' : '站点地图', '/sitemap-index.xml'],
-      ['LLMs Index', '/llms.txt'],
+      [isEn ? 'RSS Feed' : 'RSS 订阅源', `${basePath}/rss.xml`],
+      [isEn ? 'Sitemap' : '站点地图', `${basePath}/sitemap-index.xml`],
+      ['LLMs Index', `${basePath}/llms.txt`],
     ] as [string, string][],
   },
 ];
@@ -159,11 +160,15 @@ export const site = {
   ...config.site,
   googleAnalyticsId: (import.meta.env.PUBLIC_GA_ID as string | undefined) || process.env.PUBLIC_GA_ID || config.site.googleAnalyticsId || '',
   nav: dynamicNav,
-  menu: [{ label: isEn ? 'Home' : '首页', href: '/' }, ...dynamicNav],
+  menu: [{ label: isEn ? 'Home' : '首页', href: `${basePath}/` }, ...dynamicNav],
   footer: dynamicFooter,
-  secondary: config.sections.principles ? { label: isEn ? 'Principles' : '思考模型', href: '/#principles' } : { label: isEn ? 'All Posts' : '所有文章', href: '/posts' },
+  secondary: config.sections.principles ? { label: isEn ? 'Principles' : '思考模型', href: `${basePath}/#principles` } : { label: isEn ? 'All Posts' : '所有文章', href: `${basePath}/posts` },
   announcement: { text: '', href: '' },
   install: config.hero.code,
+  cta: {
+    label: config.site.cta?.label || (isEn ? 'Read Posts' : '阅读文章'),
+    href: `${basePath}/posts`,
+  },
 };
 
 export const {

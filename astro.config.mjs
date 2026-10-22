@@ -6,8 +6,10 @@ import sitemap from '@astrojs/sitemap';
 import fs from 'node:fs';
 import { load } from 'js-yaml';
 
-// 自动从 config.yaml 读取站点上线域名 (Single Source of Truth)
+// 默认从 config.yaml 读取站点上线域名 (Single Source of Truth)
 let siteUrl = 'https://gg.rekcore.com';
+let basePath = '/';
+
 try {
   if (fs.existsSync('./config.yaml')) {
     const raw = /** @type {any} */ (load(fs.readFileSync('./config.yaml', 'utf-8')));
@@ -17,8 +19,16 @@ try {
   }
 } catch {}
 
+// 如果在 GitHub Actions 中自动构建并发布到 GitHub Pages，自适应二级子路径与 GitHub 域名
+if (process.env.GITHUB_ACTIONS && process.env.GITHUB_REPOSITORY) {
+  const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
+  siteUrl = `https://${owner}.github.io`;
+  basePath = `/${repo}`;
+}
+
 export default defineConfig({
   site: siteUrl,
+  base: basePath,
   integrations: [mdx(), sitemap()],
   vite: { plugins: [tailwindcss()] },
 });
