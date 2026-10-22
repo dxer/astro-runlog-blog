@@ -20,7 +20,7 @@ const ConfigSchema = z.object({
   site: z.object({
     name: z.string().default('Runlog'),
     author: z.string().default('Alex Chen'),
-    url: z.string().default('https://gg.rekcore.com'),
+    url: z.string().default('https://dxer.github.io/astro-runlog-blog'),
     description: z.string().default('投资复盘、认知成长与技术系统的结构化日志。'),
     locale: z.enum(['zh-CN', 'en']).default('zh-CN'),
     googleAnalyticsId: z.string().default(''),

@@ -5,7 +5,7 @@
 site:
   name: "Runlog"
   author: "Alex Chen"
-  url: "https://gg.rekcore.com"
+  url: "https://dxer.github.io/astro-runlog-blog"
   description: "投资复盘、认知成长与商业周期的结构化日志。"
   locale: "zh-CN"
   googleAnalyticsId: ""

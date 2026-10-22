@@ -7,14 +7,16 @@ import fs from 'node:fs';
 import { load } from 'js-yaml';
 
 // 默认从 config.yaml 读取站点上线域名 (Single Source of Truth)
-let siteUrl = 'https://gg.rekcore.com';
-let basePath = '/';
+let siteUrl = 'https://dxer.github.io';
+let basePath = '/astro-runlog-blog';
 
 try {
   if (fs.existsSync('./config.yaml')) {
     const raw = /** @type {any} */ (load(fs.readFileSync('./config.yaml', 'utf-8')));
     if (raw?.site?.url) {
-      siteUrl = raw.site.url;
+      const u = new URL(raw.site.url);
+      siteUrl = u.origin;
+      basePath = (u.pathname && u.pathname !== '/') ? u.pathname.replace(/\/$/, '') : '/';
     }
   }
 } catch {}

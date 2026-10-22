@@ -23,5 +23,5 @@ echo "🔄 重载 Caddy 服务配置..."
 systemctl reload caddy
 
 echo "✅ 部署完成！访问地址:"
-echo "   - HTTPS: https://gg.rekcore.com/"
-echo "   - HTTP:  http://107.173.127.244/"
+echo "   - GitHub Pages: https://dxer.github.io/astro-runlog-blog/"
+echo "   - VPS HTTP:     http://107.173.127.244/"

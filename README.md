@@ -86,7 +86,7 @@ pnpm preview
 site:
   name: "Runlog"
   author: "Alex Chen"
-  url: "https://gg.rekcore.com"
+  url: "https://dxer.github.io/astro-runlog-blog"
   description: "投资复盘、认知成长与技术系统的结构化日志。"
   locale: "zh-CN"                 # 支持 "zh-CN" 或 "en"
   googleAnalyticsId: ""           # GA4 衡量 ID，留空不开启

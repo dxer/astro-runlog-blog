@@ -19,7 +19,7 @@ const { Content, headings } = await render(post);
 const toc = headings.filter((h) => h.depth === 2);
 const related = posts.filter((p) => p.id !== post.id).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 3);
 const initials = (post.data.author || 'AC').split(' ').map((w) => w[0]).join('').slice(0, 2);
-const url = new URL(`/posts/${post.id}`, Astro.site ?? site.url).href;
+const url = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
 const categoryMeta = getCategoryMeta(post.data.category);
 
 const ld = {

@@ -11,7 +11,7 @@ const { title, description = site.description, image = `${basePath}/og.png`, foo
 const fullTitle = title ? `${title} | ${site.name}` : `${site.name}: ${site.description.split('.')[0]}`;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
 const ogImage = new URL(image, Astro.site ?? site.url).href;
-const jsonLd = { '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: site.url, logo: new URL(`${basePath}/favicon.svg`, site.url).href };
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: Astro.site?.href ?? site.url, logo: new URL(`${basePath}/favicon.svg`, Astro.site ?? site.url).href };
 ---
 
 <html lang={site.locale || 'en'}>

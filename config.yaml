@@ -14,7 +14,7 @@ site:
   author: "Alex Chen"
 
   # 站点正式上线域名（用于 SEO、Canonical 链接与 RSS 订阅源生成）
-  url: "https://gg.rekcore.com"
+  url: "https://dxer.github.io/astro-runlog-blog"
 
   # 站点全局描述（用于页脚简介、页面 <meta description> 搜索引擎优化）
   description: "投资复盘、认知成长与技术系统的结构化日志。"
